@@ -1,0 +1,19 @@
+MATLAB code of full state observer
+
+clc;
+clear all;
+M=tf([1],[1 4 0]) 
+N=ss(M)% Enter Matrix M From SS Model 
+[A,B,C,D]=tf2ss([1],[1 4 0]);% Find state space model from Transfer function 
+%Check controllablity
+m=ctrb(A,B)% Find Rank of m 
+R1=rank(m) % As rank is 3 Sys is controllable 
+% Enter desired pole locations and used acker command 
+K=acker(A,B,[-2 -2])% Find Rank of k 
+%closed loop state feedback system 
+Asf=A-B*K;
+Bsf=B;
+Csf=C;
+Dsf=0;
+[numf,denf]=ss2tf(Asf,Bsf,Csf,Dsf) 
+
